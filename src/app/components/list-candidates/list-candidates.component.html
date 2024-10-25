@@ -1,0 +1,9 @@
+<button (click)="goToCreate()">Create</button>
+
+<div [hidden]="!pageLaded">
+    <ul>
+        <li *ngFor="let candidateListingItem of candidateListingItems">{{candidateListingItem.firstName}}
+            {{candidateListingItem.surname}}
+            with skills: {{candidateListingItem.skills}}</li>
+    </ul>
+</div>

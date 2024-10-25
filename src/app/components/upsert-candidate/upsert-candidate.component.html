@@ -1,0 +1,21 @@
+<form [formGroup]="candidateForm" (ngSubmit)="Save()">
+
+    <input type="text" formControlName="firstName" placeholder="First Name">
+    <div *ngIf="candidateForm.controls['firstName'].invalid && candidateForm.controls['firstName'].touched">
+        <div
+            *ngIf="candidateForm.controls['firstName'].errors && candidateForm.controls['firstName'].errors['required']">
+            firstName is required</div>
+    </div>
+    <input type="text" formControlName="surname" placeholder="Surname">
+    <div *ngIf="candidateForm.controls['surname'].invalid && candidateForm.controls['surname'].touched">
+        <div *ngIf="candidateForm.controls['surname'].errors && candidateForm.controls['surname'].errors['required']">
+            surname is required</div>
+    </div>
+    <input type="text" formControlName="dateOfBirth" placeholder="DOB, should be date picker">
+    <div *ngIf="candidateForm.controls['dateOfBirth'].invalid && candidateForm.controls['dateOfBirth'].touched">
+        <div
+            *ngIf="candidateForm.controls['dateOfBirth'].errors && candidateForm.controls['dateOfBirth'].errors['required']">
+            DOB is required</div>
+    </div>
+    <button [disabled]="candidateForm.invalid">Save</button>
+</form>

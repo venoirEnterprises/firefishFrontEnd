@@ -5,7 +5,6 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export class CandidateService {
-    private candidates: Candidate[] = [];
     private apiString = "/Candidates/";
 
     constructor(
@@ -17,8 +16,13 @@ export class CandidateService {
             .pipe(catchError(this.handleError))
     }
 
+    createCandidate(candidate: Candidate): Observable<any> {
+        window.console.log(candidate);
+        return this.http.post(this.apiString.concat('Create/'), candidate).pipe(catchError(this.handleError))
+    }
+
     private handleError(error: HttpErrorResponse) {
         return throwError(
-            alert("error getting candidates"));
+            alert("error"));
     };
 }
