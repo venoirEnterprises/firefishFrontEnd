@@ -34,6 +34,7 @@ export class UpsertCandidateComponent implements OnInit {
 
   ngOnInit() {
     this.candidateID = this.activatedRoute.snapshot.paramMap.get("id");
+    this.candidateToUpsert.skillIDs = [];
     this.skillsService.getSkills().subscribe(skills => {
       this.skills = skills;
       if (this.candidateID != null) {
@@ -53,22 +54,21 @@ export class UpsertCandidateComponent implements OnInit {
   }
 
   public updateCandidateSkills(event: any) {
-    const candidateSkills = this.candidateToUpsert.skillIDs;
+    let candidateSkills = this.candidateToUpsert.skillIDs;
 
     if (event.target.checked) {
-      candidateSkills.push(event.value);
+      candidateSkills.push(event.target.value as number);
     } else {
       let i: number = 0;
       candidateSkills.forEach(skill => {
         if (skill == event.target.value) {
-          // Remove the unselected element from the arrayForm
           candidateSkills.splice(i, 1)
           return;
         }
         i++;
       });
     }
-
+    this.candidateToUpsert.skillIDs = candidateSkills;
   }
 
   public createForm() {
@@ -76,12 +76,13 @@ export class UpsertCandidateComponent implements OnInit {
       firstName: [this.candidateToUpsert.firstName, Validators.required],
       surname: [this.candidateToUpsert.surname, Validators.required],
       dateOfBirth: [this.candidateToUpsert.dateOfBirth, Validators.required],
-      address1: [this.candidateToUpsert.address1],
-      town: [this.candidateToUpsert.town],
-      country: [this.candidateToUpsert.country],
-      phoneHome: [this.candidateToUpsert.phoneHome],
-      phoneMobile: [this.candidateToUpsert.phoneMobile],
-      phoneWork: [this.candidateToUpsert.phoneWork],
+      address1: [this.candidateToUpsert.address1, Validators.required],
+      town: [this.candidateToUpsert.town, Validators.required],
+      country: [this.candidateToUpsert.country, Validators.required],
+      postCode: [this.candidateToUpsert.postCode, Validators.required],
+      phoneHome: [this.candidateToUpsert.phoneHome, Validators.required],
+      phoneMobile: [this.candidateToUpsert.phoneMobile, Validators.required],
+      phoneWork: [this.candidateToUpsert.phoneWork, Validators.required],
     });
     this.pageLoaded = true;
   }
@@ -91,8 +92,10 @@ export class UpsertCandidateComponent implements OnInit {
     candidateToSend.firstName = this.candidateForm.value["firstName"];
     candidateToSend.surname = this.candidateForm.value["surname"];
     candidateToSend.dateOfBirth = this.candidateForm.value["dateOfBirth"];
+    candidateToSend.address1 = this.candidateForm.value["address1"];
     candidateToSend.town = this.candidateForm.value["town"];
     candidateToSend.country = this.candidateForm.value["country"];
+    candidateToSend.postCode = this.candidateForm.value["postCode"]
     candidateToSend.phoneHome = this.candidateForm.value["phoneHome"];
     candidateToSend.phoneMobile = this.candidateForm.value["phoneMobile"];
     candidateToSend.phoneWork = this.candidateForm.value["phoneWork"];

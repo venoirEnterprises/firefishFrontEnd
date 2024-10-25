@@ -6,6 +6,7 @@ export class Candidate {
     public address1: string;
     public town: string;
     public country: string;
+    public postCode: string;
     public phoneHome: string;
     public phoneMobile: string;
     public phoneWork: string;
