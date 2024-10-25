@@ -2,5 +2,9 @@
     "/Candidates": {
         "target": "https://localhost:7245",
         "secure": false
+    },
+    "/Skills": {
+        "target": "https://localhost:7245",
+        "secure": false
     }
 }

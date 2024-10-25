@@ -16,6 +16,15 @@ export class CandidateService {
             .pipe(catchError(this.handleError))
     }
 
+    getCandidate(ID: number): Observable<any> {
+        return this.http.get(this.apiString.concat('/Get?ID=').concat(ID.toString())).pipe(catchError(this.handleError))
+    }
+
+    updateCandidate(candidate: Candidate): Observable<any> {
+        window.console.log(candidate);
+        return this.http.put(this.apiString.concat('Update/'), candidate).pipe(catchError(this.handleError))
+    }
+
     createCandidate(candidate: Candidate): Observable<any> {
         window.console.log(candidate);
         return this.http.post(this.apiString.concat('Create/'), candidate).pipe(catchError(this.handleError))

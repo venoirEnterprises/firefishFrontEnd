@@ -4,6 +4,8 @@
     <ul>
         <li *ngFor="let candidateListingItem of candidateListingItems">{{candidateListingItem.firstName}}
             {{candidateListingItem.surname}}
-            with skills: {{candidateListingItem.skills}}</li>
+            with skills: {{candidateListingItem.skillNamesConcatanated}}
+            <button (click)="goToEdit(candidateListingItem.id)">Edit</button>
+        </li>
     </ul>
 </div>

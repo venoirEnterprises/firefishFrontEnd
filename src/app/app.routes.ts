@@ -4,5 +4,6 @@ import { ListCandidatesComponent } from './components/list-candidates/list-candi
 
 export const routes: Routes = [
     { path: 'create', component: UpsertCandidateComponent },
+    { path: 'edit/:id', component: UpsertCandidateComponent },
     { path: '', component: ListCandidatesComponent }
 ];

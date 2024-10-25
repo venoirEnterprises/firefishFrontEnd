@@ -31,4 +31,8 @@ export class ListCandidatesComponent {
     this.router.navigate(['/create']);
   }
 
+  goToEdit(id: number) {
+    this.router.navigate(["edit/".concat(id.toString())])
+  }
+
 }

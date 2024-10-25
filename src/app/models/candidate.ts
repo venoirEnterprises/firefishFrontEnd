@@ -1,4 +1,5 @@
 export class Candidate {
+    public id: number;
     public firstName: string;
     public surname: string;
     public dateOfBirth: string;
@@ -7,9 +8,10 @@ export class Candidate {
     public country: string;
     public phoneHome: string;
     public phoneMobile: string;
-    public phnneWork: string;
+    public phoneWork: string;
+    public skillIDs: number[];
 }
 
 export class CandidateListingItem extends Candidate {
-    public skills: string;
+    public skillNamesConcatanated: string;
 }
