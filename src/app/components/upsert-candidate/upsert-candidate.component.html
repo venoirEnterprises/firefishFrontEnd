@@ -1,78 +1,84 @@
 <div [hidden]="!pageLoaded">
-    <button (click)="goBackToListing()">Back to list</button>
-
-    <form [formGroup]="candidateForm" (ngSubmit)="Save()">
-        <input [hidden]="true" formControlName="firstName">
-        <input type="text" formControlName="firstName" placeholder="first name">
-        <div *ngIf="candidateForm.controls['firstName'].invalid && candidateForm.controls['firstName'].touched">
-            <div
-                *ngIf="candidateForm.controls['firstName'].errors && candidateForm.controls['firstName'].errors['required']">
-                first name is required</div>
-        </div>
-        <input type="text" formControlName="surname" placeholder="Surname">
-        <div *ngIf="candidateForm.controls['surname'].invalid && candidateForm.controls['surname'].touched">
-            <div
-                *ngIf="candidateForm.controls['surname'].errors && candidateForm.controls['surname'].errors['required']">
-                surname is required</div>
-        </div>
-        <input type="text" formControlName="dateOfBirth" placeholder="DOB, should be date picker">
-        <div *ngIf="candidateForm.controls['dateOfBirth'].invalid && candidateForm.controls['dateOfBirth'].touched">
-            <div
-                *ngIf="candidateForm.controls['dateOfBirth'].errors && candidateForm.controls['dateOfBirth'].errors['required']">
-                DOB is required</div>
-        </div>
-        <input type="text" formControlName="address1" placeholder="Address 1">
-        <div *ngIf="candidateForm.controls['address1'].invalid && candidateForm.controls['address1'].touched">
-            <div
-                *ngIf="candidateForm.controls['address1'].errors && candidateForm.controls['address1'].errors['required']">
-                Address 1 is required</div>
-        </div>
-        <input type="text" formControlName="town" placeholder="town">
-        <div *ngIf="candidateForm.controls['town'].invalid && candidateForm.controls['town'].touched">
-            <div *ngIf="candidateForm.controls['town'].errors && candidateForm.controls['town'].errors['required']">
-                town is required</div>
-        </div>
-        <input type="text" formControlName="country" placeholder="country">
-        <div *ngIf="candidateForm.controls['country'].invalid && candidateForm.controls['country'].touched">
-            <div
-                *ngIf="candidateForm.controls['country'].errors && candidateForm.controls['country'].errors['required']">
-                country is required</div>
-        </div>
-        <input type="text" formControlName="postCode" placeholder="Post Code">
-        <div *ngIf="candidateForm.controls['postCode'].invalid && candidateForm.controls['postCode'].touched">
-            <div
-                *ngIf="candidateForm.controls['postCode'].errors && candidateForm.controls['postCode'].errors['postCode']">
-                Post Code is required</div>
-        </div>
-        <input type="text" formControlName="phoneHome" placeholder="Home Phone">
-        <div *ngIf="candidateForm.controls['phoneHome'].invalid && candidateForm.controls['phoneHome'].touched">
-            <div
-                *ngIf="candidateForm.controls['phoneHome'].errors && candidateForm.controls['phoneHome'].errors['required']">
-                Home Phone is required</div>
-        </div>
-        <input type="text" formControlName="phoneMobile" placeholder="Mobile Phone">
-        <div *ngIf="candidateForm.controls['phoneMobile'].invalid && candidateForm.controls['phoneMobile'].touched">
-            <div
-                *ngIf="candidateForm.controls['phoneMobile'].errors && candidateForm.controls['phoneMobile'].errors['required']">
-                Mobile Phone is required</div>
-        </div>
-        <input type="text" formControlName="phoneWork" placeholder="Work Phone">
-        <div *ngIf="candidateForm.controls['phoneWork'].invalid && candidateForm.controls['phoneWork'].touched">
-            <div
-                *ngIf="candidateForm.controls['phoneWork'].errors && candidateForm.controls['phoneWork'].errors['required']">
-                Work Phone is required</div>
-        </div>
-        <br>
-        <section *ngIf="isEditing">
-            <div *ngFor="let skill of skills;">
-                <label>
-                    <input type="checkbox" [checked]="candidateHasSkill(skill.id)" [value]="skill.id"
-                        (change)="updateCandidateSkills($event)">
-                    {{skill.name}}
-                </label>
+    <div class="row">
+        <button (click)="goBackToListing()" class="btn btn-secondary">Back to list</button>
+    </div>
+    <form [formGroup]="candidateForm" (ngSubmit)="Save()" class="form-horizontal" role="form">
+        <div class="container">
+            <input [hidden]="true" formControlName="firstName">
+            <div class="form-group row">
+                <div class="col-md-6 col-sm-12">
+                    <label for="firstName">First Name*:</label>
+                    <input type="text" formControlName="firstName" class="form-control"
+                        (change)="updateNameValidation()" />
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label for="firstName">Surname*:</label>
+                    <input type="text" formControlName="surname" class="form-control"
+                        (change)="updateSurnameValidation()" />
+                </div>
             </div>
-        </section>
-        <br>
-        <button [disabled]="candidateForm.invalid">Save</button>
+            <div class="form-group row">
+                <div class="col-md-6 col-sm-12">
+                    <label for="dateOfBirth">Date Of Birth*:</label>
+                    <input type="text" formControlName="dateOfBirth" class="form-control"
+                        (change)="updateDOBValidation()" />
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label for="address1">Address 1*:</label>
+                    <input type="text" formControlName="address1" class="form-control"
+                        (change)="updateAddress1Validation()" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-6 col-sm-12">
+                    <label for="town">Town*:</label>
+                    <input type="text" formControlName="town" class="form-control" (change)="updateTownValidation()" />
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label for="postCode">Post Code*:</label>
+                    <input type="text" formControlName="postCode" class="form-control"
+                        (change)="updateCountryValidation()" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-6 col-sm-12">
+                    <label for="country">Country*:</label>
+                    <input type="text" formControlName="country" class="form-control"
+                        (change)="updatePostCodeValidation()" />
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label for="phoneHome">Phone (home)*:</label>
+                    <input type="text" formControlName="phoneHome" class="form-control"
+                        (change)="updatePhoneHomeValidation()" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-6 col-sm-12">
+                    <label for="phoneMobile">Phone (mobile)*:</label>
+                    <input type="text" formControlName="phoneMobile" class="form-control"
+                        (change)="updatePhoneMobileValidation()" />
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label for="phoneWork">Phone (work)*:</label>
+                    <input type="text" formControlName="phoneWork" class="form-control"
+                        (change)="updatePhoneWorkValidation()" />
+                </div>
+            </div>
+            <br>
+            <section *ngIf="isEditing" class="row">
+                <div *ngFor="let skill of skills;" class="col-md-4 col-sm-6">
+                    <label>
+                        <input type="checkbox" [checked]="candidateHasSkill(skill.id)" [value]="skill.id"
+                            (change)="updateCandidateSkills($event)">
+                        {{skill.name}}
+                    </label>
+                </div>
+            </section>
+            <br>
+        </div>
+        {{candidateForm.controls['firstName'].invalid}}, {{candidateForm.invalid}}
+        <div class="row">
+            <button class="btn btn-primary">Save</button>
+        </div>
     </form>
 </div>

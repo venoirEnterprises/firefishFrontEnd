@@ -1,11 +1,30 @@
-<button (click)="goToCreate()">Create</button>
+<section class="row">
+    <button class="col-md-4 btn btn-secondary" (click)="goToCreate()">Create</button>
+    <div class="col-md-3"></div>
+    <input class="col-md-3" type="text" placeholder="Search" />
+    <button class="col-md-1 btn btn-secondary">Go</button>
+</section>
 
-<div [hidden]="!pageLaded">
-    <ul>
-        <li *ngFor="let candidateListingItem of candidateListingItems">{{candidateListingItem.firstName}}
+<div [hidden]="!pageLaded" class="container">
+    <section class="row">
+        <p class="col-md-1"></p>
+        <p class="col-md-3"><b>First Name<i class="fa fa-fw fa-sort-down"></i></b></p>
+        <p class="col-md-3"><b>Surname<i class="fa fa-fw fa-sort"></i></b></p>
+        <p class="col-md-5"><b>Skills<i class="fa fa-fw fa-sort"></i></b></p>
+    </section>
+    <hr>
+    <section *ngFor="let candidateListingItem of candidateListingItems" class="row">
+        <button class="btn btn-link col-md-1" (click)=" goToEdit(candidateListingItem.id)">Edit</button>
+        <p class="col-md-3">
+            {{candidateListingItem.firstName}}
+        </p>
+        <p class="col-md-3">
             {{candidateListingItem.surname}}
-            with skills: {{candidateListingItem.skillNamesConcatanated}}
-            <button (click)="goToEdit(candidateListingItem.id)">Edit</button>
-        </li>
-    </ul>
+        </p>
+        <i *ngIf="candidateListingItem.skillNamesConcatanated.length==0" class="col-md-5">None</i>
+        <p *ngIf="candidateListingItem.skillNamesConcatanated.length>0" class="col-md-5">
+            {{candidateListingItem.skillNamesConcatanated}}</p>
+
+    </section>
+    <br>
 </div>

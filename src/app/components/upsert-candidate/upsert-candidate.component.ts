@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CandidateService } from '../../services/candidate.service';
 import { Candidate } from '../../models/candidate';
-import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Skill } from '../../models/skill';
 import { SkillsService } from '../../services/skills.service';
-import { windowWhen } from 'rxjs';
 
 @Component({
   selector: 'app-upsert-candidate',
@@ -82,42 +81,88 @@ export class UpsertCandidateComponent implements OnInit {
       postCode: [this.candidateToUpsert.postCode, Validators.required],
       phoneHome: [this.candidateToUpsert.phoneHome, Validators.required],
       phoneMobile: [this.candidateToUpsert.phoneMobile, Validators.required],
-      phoneWork: [this.candidateToUpsert.phoneWork, Validators.required],
+      phoneWork: [this.candidateToUpsert.phoneWork, Validators.required]
     });
     this.pageLoaded = true;
   }
 
-  public Save() {
-    const candidateToSend: Candidate = new Candidate();
-    candidateToSend.firstName = this.candidateForm.value["firstName"];
-    candidateToSend.surname = this.candidateForm.value["surname"];
-    candidateToSend.dateOfBirth = this.candidateForm.value["dateOfBirth"];
-    candidateToSend.address1 = this.candidateForm.value["address1"];
-    candidateToSend.town = this.candidateForm.value["town"];
-    candidateToSend.country = this.candidateForm.value["country"];
-    candidateToSend.postCode = this.candidateForm.value["postCode"]
-    candidateToSend.phoneHome = this.candidateForm.value["phoneHome"];
-    candidateToSend.phoneMobile = this.candidateForm.value["phoneMobile"];
-    candidateToSend.phoneWork = this.candidateForm.value["phoneWork"];
-    candidateToSend.skillIDs = this.candidateToUpsert.skillIDs;
+  public updateNameValidation() {
+    this.candidateForm.controls['firstName'].updateValueAndValidity();
+  }
 
-    if (this.isEditing) {
-      candidateToSend.id = this.candidateID;
-      this.candidateService.updateCandidate(candidateToSend).subscribe(updateResult => {
-        if (updateResult) {
-          this.goBackToListing();
-        } else {
-          console.log("error, see previous")
-        }
-      })
+  public updateSurnameValidation() {
+    this.candidateForm.controls['surname'].updateValueAndValidity();
+  }
+
+  public updateDOBValidation() {
+    this.candidateForm.controls['dateOfBirth'].updateValueAndValidity();
+  }
+
+  public updateAddress1Validation() {
+    this.candidateForm.controls['address1'].updateValueAndValidity();
+  }
+
+  public updateTownValidation() {
+    this.candidateForm.controls['town'].updateValueAndValidity();
+  }
+
+  public updateCountryValidation() {
+    this.candidateForm.controls['country'].updateValueAndValidity();
+  }
+
+  public updatePostCodeValidation() {
+    this.candidateForm.controls['postCode'].updateValueAndValidity();
+  }
+
+  public updatePhoneHomeValidation() {
+    this.candidateForm.controls['phoneHome'].updateValueAndValidity();
+  }
+
+  public updatePhoneMobileValidation() {
+    this.candidateForm.controls['phoneMobile'].updateValueAndValidity();
+  }
+
+  public updatePhoneWorkValidation() {
+    this.candidateForm.controls['phoneWork'].updateValueAndValidity();
+  }
+
+  public Save() {
+    const candidateFrm = this.candidateForm;
+
+    if (candidateFrm.invalid) {
+      return;
     } else {
-      this.candidateService.createCandidate(candidateToSend).subscribe(createResult => {
-        if (createResult) {
-          this.goBackToListing();
-        } else {
-          console.log("error, see previous")
-        }
-      })
+      const candidateToSend: Candidate = new Candidate();
+      candidateToSend.firstName = candidateFrm.value["firstName"];
+      candidateToSend.surname = candidateFrm.value["surname"];
+      candidateToSend.dateOfBirth = candidateFrm.value["dateOfBirth"];
+      candidateToSend.address1 = candidateFrm.value["address1"];
+      candidateToSend.town = candidateFrm.value["town"];
+      candidateToSend.country = candidateFrm.value["country"];
+      candidateToSend.postCode = candidateFrm.value["postCode"]
+      candidateToSend.phoneHome = candidateFrm.value["phoneHome"];
+      candidateToSend.phoneMobile = candidateFrm.value["phoneMobile"];
+      candidateToSend.phoneWork = candidateFrm.value["phoneWork"];
+      candidateToSend.skillIDs = this.candidateToUpsert.skillIDs;
+
+      if (this.isEditing) {
+        candidateToSend.id = this.candidateID;
+        this.candidateService.updateCandidate(candidateToSend).subscribe(updateResult => {
+          if (updateResult) {
+            this.goBackToListing();
+          } else {
+            console.log("error, see previous")
+          }
+        })
+      } else {
+        this.candidateService.createCandidate(candidateToSend).subscribe(createResult => {
+          if (createResult) {
+            this.goBackToListing();
+          } else {
+            console.log("error, see previous")
+          }
+        })
+      }
     }
   }
 
